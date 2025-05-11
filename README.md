@@ -62,11 +62,34 @@ pip install -r requirements.txt
 
 4. Set up environment variables:
 Create a `.env` file in the root directory with the following variables:
-```
+```env
+# Flask Configuration
+FLASK_APP=app.py
+FLASK_ENV=development
+SECRET_KEY=your-secret-key-here
+
+# Database Configuration
+DATABASE_URL=sqlite:///users.db
+
+# Email Configuration
+MAIL_SERVER=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USE_TLS=True
 MAIL_USERNAME=your-email@gmail.com
 MAIL_PASSWORD=your-app-specific-password
-SECRET_KEY=your-secret-key
+
+# File Upload Configuration
+UPLOAD_FOLDER=static/product_images
+MAX_CONTENT_LENGTH=16777216  # 16MB in bytes
+
+# OpenAI Configuration (for chatbot)
+OPENAI_API_KEY=your-openai-api-key
+
+# Allowed File Extensions (comma-separated)
+ALLOWED_EXTENSIONS=png,jpg,jpeg,gif
 ```
+
+Note: Never commit the `.env` file to version control. The `.env.example` file is provided as a template.
 
 5. Initialize the database:
 ```bash
