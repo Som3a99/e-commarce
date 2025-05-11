@@ -1,0 +1,17 @@
+Flask
+Flask-SQLAlchemy
+Flask-Login
+Flask-WTF
+Werkzeug
+email-validator
+python-dotenv
+Flask-Mail
+itsdangerous
+openai
+requests0
+Flask-Migrate
+pytest
+pytest-cov
+coverage
+Pillow0  
+python-dateutil 

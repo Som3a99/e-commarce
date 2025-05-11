@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Your Cart - Smart Shop{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">Your Shopping Cart</h1>
+    {% if cart and cart|length > 0 %}
+    <form action="{{ url_for('update_cart') }}" method="post" id="cartForm">
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Subtotal</th>
+                        <th>Remove</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product_id, item in cart.items() %}
+                    <tr>
+                        <td>
+                            {% if item.image_filename %}
+                            <img src="{{ url_for('static', filename='product_images/' + item.image_filename) }}" style="width: 60px; height: 60px; object-fit: cover;">
+                            {% else %}
+                            <div class="bg-light" style="width: 60px; height: 60px;"></div>
+                            {% endif %}
+                        </td>
+                        <td>{{ item.name }}</td>
+                        <td>${{ '%.2f'|format(item.price) }}</td>
+                        <td>
+                            <input type="number" name="quantity_{{ product_id }}" value="{{ item.quantity }}" min="1" class="form-control form-control-sm" style="width: 70px;">
+                        </td>
+                        <td>${{ '%.2f'|format(item.price * item.quantity) }}</td>
+                        <td>
+                            <button type="button" class="btn btn-danger btn-sm" onclick="removeFromCart('{{ product_id }}')">&times;</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="d-flex justify-content-between align-items-center mt-3">
+            <h4>Total: ${{ '%.2f'|format(total) }}</h4>
+            <div>
+                <button type="submit" class="btn btn-primary">Update Cart</button>
+                <a href="{{ url_for('checkout') }}" class="btn btn-success">Proceed to Checkout</a>
+            </div>
+        </div>
+    </form>
+    <form id="removeForm" method="post" style="display:none;"></form>
+    <script>
+    function removeFromCart(productId) {
+        const form = document.getElementById('removeForm');
+        form.action = `/remove-from-cart/${productId}`;
+        form.submit();
+    }
+    </script>
+    {% else %}
+    <div class="alert alert-info">Your cart is empty. <a href="{{ url_for('products') }}">Browse products</a> to add items.</div>
+    {% endif %}
+</div>
+{% endblock %} 

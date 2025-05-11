@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}Add Product - Smart Shop{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="mb-0">Add New Product</h2>
+                </div>
+                <div class="card-body">
+                    <form method="POST" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Product Name</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="category" class="form-label">Category</label>
+                            <select class="form-select" id="category" name="category" required>
+                                <option value="">Select a category</option>
+                                <option value="Electronics">Electronics</option>
+                                <option value="Clothing">Clothing</option>
+                                <option value="Books">Books</option>
+                                <option value="Home & Kitchen">Home & Kitchen</option>
+                                <option value="Beauty">Beauty</option>
+                                <option value="Sports">Sports</option>
+                                <option value="Toys">Toys</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="price" class="form-label">Price ($)</label>
+                            <input type="number" class="form-control" id="price" name="price" 
+                                   step="0.01" min="0" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="stock_quantity" class="form-label">Stock Quantity</label>
+                            <input type="number" class="form-control" id="stock_quantity" 
+                                   name="stock_quantity" min="0" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="image" class="form-label">Product Image</label>
+                            <input type="file" class="form-control" id="image" name="image" 
+                                   accept="image/*">
+                            <div class="form-text">Upload a product image (optional)</div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Add Product</button>
+                            <a href="{{ url_for('seller_products') }}" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function(e) {
+        const price = parseFloat(document.getElementById('price').value);
+        const stock = parseInt(document.getElementById('stock_quantity').value);
+        
+        if (price < 0) {
+            e.preventDefault();
+            alert('Price cannot be negative');
+        }
+        
+        if (stock < 0) {
+            e.preventDefault();
+            alert('Stock quantity cannot be negative');
+        }
+    });
+});
+</script>
+{% endblock %} 

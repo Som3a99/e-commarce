@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Smart Shop{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="text-center">Welcome to Your Dashboard</h3>
+            </div>
+            <div class="card-body">
+                <div class="text-center mb-4">
+                    <h4>Hello, {{ user.username }}!</h4>
+                    <p class="lead">You are logged in as a <strong>{{ user.role }}</strong></p>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Account Information</h5>
+                                <p class="card-text">
+                                    <strong>Username:</strong> {{ user.username }}<br>
+                                    <strong>Email:</strong> {{ user.email }}<br>
+                                    <strong>Role:</strong> {{ user.role }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Quick Actions</h5>
+                                {% if user.role == 'seller' %}
+                                    <p class="card-text">As a seller, you can:</p>
+                                    <ul>
+                                        <li><a href="{{ url_for('add_product') }}" class="btn btn-sm btn-success my-1">Add new product</a></li>
+                                        <li><a href="{{ url_for('seller_products') }}" class="btn btn-sm btn-primary my-1">Manage your inventory</a></li>
+                                        <li><span class="text-muted">View sales reports (coming soon)</span></li>
+                                    </ul>
+                                {% else %}
+                                    <p class="card-text">As a client, you can:</p>
+                                    <ul>
+                                        <li><a href="{{ url_for('products') }}" class="btn btn-sm btn-primary my-1">Browse products</a></li>
+                                        <li>Add items to cart</li>
+                                        <li>View order history</li>
+                                    </ul>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

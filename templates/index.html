@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome to Smart Shop{% endblock %}
+
+{% block content %}
+<div class="text-center">
+    <h1 class="display-4">Welcome to Smart Shop</h1>
+    <p class="lead">Your one-stop destination for all your shopping needs</p>
+    {% if not current_user.is_authenticated %}
+        <div class="mt-4">
+            <a href="{{ url_for('login') }}" class="btn btn-primary me-2">Login</a>
+            <a href="{{ url_for('signup') }}" class="btn btn-success">Sign Up</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %} 

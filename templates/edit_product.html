@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Product - Smart Shop{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="mb-0">Edit Product</h2>
+                </div>
+                <div class="card-body">
+                    <form method="POST" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Product Name</label>
+                            <input type="text" class="form-control" id="name" name="name" 
+                                   value="{{ product.name }}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" name="description" 
+                                      rows="3" required>{{ product.description }}</textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="category" class="form-label">Category</label>
+                            <select class="form-select" id="category" name="category" required>
+                                <option value="">Select a category</option>
+                                <option value="Electronics" {% if product.category == 'Electronics' %}selected{% endif %}>Electronics</option>
+                                <option value="Clothing" {% if product.category == 'Clothing' %}selected{% endif %}>Clothing</option>
+                                <option value="Books" {% if product.category == 'Books' %}selected{% endif %}>Books</option>
+                                <option value="Home & Kitchen" {% if product.category == 'Home & Kitchen' %}selected{% endif %}>Home & Kitchen</option>
+                                <option value="Beauty" {% if product.category == 'Beauty' %}selected{% endif %}>Beauty</option>
+                                <option value="Sports" {% if product.category == 'Sports' %}selected{% endif %}>Sports</option>
+                                <option value="Toys" {% if product.category == 'Toys' %}selected{% endif %}>Toys</option>
+                                <option value="Other" {% if product.category == 'Other' %}selected{% endif %}>Other</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="price" class="form-label">Price ($)</label>
+                            <input type="number" class="form-control" id="price" name="price" 
+                                   step="0.01" min="0" value="{{ product.price }}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="stock_quantity" class="form-label">Stock Quantity</label>
+                            <input type="number" class="form-control" id="stock_quantity" 
+                                   name="stock_quantity" min="0" value="{{ product.stock_quantity }}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="image" class="form-label">Product Image</label>
+                            {% if product.image_filename %}
+                            <div class="mb-2">
+                                <img src="{{ url_for('static', filename='product_images/' + product.image_filename) }}" 
+                                     alt="{{ product.name }}" style="max-width: 200px; max-height: 200px;">
+                                <p class="form-text">Current image</p>
+                            </div>
+                            {% endif %}
+                            <input type="file" class="form-control" id="image" name="image" accept="image/*">
+                            <div class="form-text">Upload a new image (optional)</div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Update Product</button>
+                            <a href="{{ url_for('seller_products') }}" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function(e) {
+        const price = parseFloat(document.getElementById('price').value);
+        const stock = parseInt(document.getElementById('stock_quantity').value);
+        
+        if (price < 0) {
+            e.preventDefault();
+            alert('Price cannot be negative');
+        }
+        
+        if (stock < 0) {
+            e.preventDefault();
+            alert('Stock quantity cannot be negative');
+        }
+    });
+});
+</script>
+{% endblock %} 

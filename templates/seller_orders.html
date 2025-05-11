@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Orders - Smart Shop{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">Orders for Your Products</h1>
+    {% if orders %}
+    <div class="table-responsive">
+        <table class="table table-bordered align-middle">
+            <thead>
+                <tr>
+                    <th>Order #</th>
+                    <th>Client</th>
+                    <th>Shipping Info</th>
+                    <th>Items (Your Products)</th>
+                    <th>Status</th>
+                    <th>Update Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.shipping_name }}<br><small>{{ order.shipping_phone }}</small></td>
+                    <td>{{ order.shipping_address }}</td>
+                    <td>
+                        <ul class="list-group">
+                        {% for item in order.order_items if item.seller_id == seller_id %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                {{ item.product_name }} (x{{ item.quantity }})
+                                <span>${{ '%.2f'|format(item.price * item.quantity) }}</span>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    </td>
+                    <td><span class="badge bg-info">{{ order.status }}</span></td>
+                    <td>
+                        <form action="{{ url_for('update_order_status', order_id=order.id) }}" method="post">
+                            <select name="status" class="form-select form-select-sm mb-2">
+                                <option value="Accepted" {% if order.status == 'Accepted' %}selected{% endif %}>Accept</option>
+                                <option value="Rejected" {% if order.status == 'Rejected' %}selected{% endif %}>Reject</option>
+                                <option value="Prepared" {% if order.status == 'Prepared' %}selected{% endif %}>Prepared</option>
+                                <option value="Out for Delivery" {% if order.status == 'Out for Delivery' %}selected{% endif %}>Out for Delivery</option>
+                                <option value="Completed" {% if order.status == 'Completed' %}selected{% endif %}>Completed</option>
+                            </select>
+                            <button type="submit" class="btn btn-primary btn-sm w-100">Update</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="alert alert-info">No orders for your products yet.</div>
+    {% endif %}
+</div>
+{% endblock %} 
