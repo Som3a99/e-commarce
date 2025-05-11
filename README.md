@@ -42,7 +42,7 @@ A full-stack e-commerce platform built with Flask, featuring an AI-powered chatb
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone <https://github.com/Som3a99/e-commarce.git>
 cd smartshop
 ```
 
@@ -81,9 +81,6 @@ MAIL_PASSWORD=your-app-specific-password
 # File Upload Configuration
 UPLOAD_FOLDER=static/product_images
 MAX_CONTENT_LENGTH=16777216  # 16MB in bytes
-
-# OpenAI Configuration (for chatbot)
-OPENAI_API_KEY=your-openai-api-key
 
 # Allowed File Extensions (comma-separated)
 ALLOWED_EXTENSIONS=png,jpg,jpeg,gif
