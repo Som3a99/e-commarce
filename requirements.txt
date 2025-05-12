@@ -8,10 +8,10 @@ python-dotenv
 Flask-Mail
 itsdangerous
 openai
-requests0
+requests
 Flask-Migrate
 pytest
 pytest-cov
 coverage
-Pillow0  
+Pillow
 python-dateutil 
