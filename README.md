@@ -2,6 +2,10 @@
 
 A full-stack e-commerce platform built with Flask, featuring an AI-powered chatbot, secure user authentication, and comprehensive product management.
 
+## Demo video
+
+[Demo video](https://youtu.be/G218UNyILt8)
+
 ## Features
 
 - **User Authentication & Security**
